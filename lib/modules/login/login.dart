@@ -1,17 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:maternal_health_data/modules/landing/landing.dart';
 import 'package:maternal_health_data/shared/fields/text_input.dart';
+import 'package:maternal_health_data/shared/models/credentials.dart';
+import 'package:toast/toast.dart';
 
-class Login extends StatelessWidget {
-  Login({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final TextEditingController _usernameController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
-  onPressed() {
+  final TextEditingController _urlController = TextEditingController();
+
+  bool loading = false;
+
+  onPressed(BuildContext context) async {
     String username = _usernameController.text;
     String password = _passwordController.text;
+    String url = _urlController.text;
+    Credentials credentials =
+        Credentials(username: username, url: url, password: password);
 
-    print(username);
-    print(password);
+    setState(() {
+      loading = true;
+    });
+    try {
+      bool isValid = await credentials.validate();
+
+      if (isValid) {
+        await credentials.save();
+        if (!mounted) return;
+        navigateToLanding(context);
+      } else {
+        Toast.show("Invalid url/username/password",
+            duration: Toast.lengthLong, gravity: Toast.bottom);
+      }
+    } catch (e) {
+      Toast.show("Error: ${e.toString()}",
+          duration: Toast.lengthLong, gravity: Toast.bottom);
+    }
   }
 
   @override
@@ -35,6 +68,13 @@ class Login extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextInputField(
+                      controller: _urlController,
+                      label: "URL",
+                      type: "text",
+                      prefix: "https://",
+                      helpText: "Example https://play.dhis2.org"),
+                  const Padding(padding: EdgeInsets.only(top: 16)),
+                  TextInputField(
                       controller: _usernameController,
                       label: "Username",
                       type: "text"),
@@ -44,7 +84,8 @@ class Login extends StatelessWidget {
                       label: "Password",
                       type: "password"),
                   ElevatedButton(
-                      onPressed: onPressed, child: const Text("Login"))
+                      onPressed: () => onPressed(context),
+                      child: Text(loading ? "Please wait..." : "Login"))
                 ],
               ),
             ),
@@ -52,5 +93,12 @@ class Login extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void navigateToLanding(BuildContext context) {
+    Toast.show("Login successful",
+        duration: Toast.lengthLong, gravity: Toast.bottom);
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => Landing()));
   }
 }

@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:maternal_health_data/shared/fields/text_input.dart';
+import 'package:maternal_health_data/modules/home/home.dart';
+import 'package:maternal_health_data/modules/login/login.dart';
+import 'package:maternal_health_data/shared/models/credentials.dart';
 
-class Landing extends StatelessWidget {
-  Landing({Key? key}) : super(key: key);
-  final TextEditingController _urlController = TextEditingController();
+class Landing extends StatefulWidget {
+  const Landing({Key? key}) : super(key: key);
 
-  onPressed() {
-    String url = _urlController.text;
-    print(url);
+  @override
+  State<Landing> createState() => _LandingState();
+}
+
+class _LandingState extends State<Landing> {
+  checkCredentials() async {
+    Credentials? credentials = await Credentials.fromStorage();
+    if (credentials == null) {
+      if (!mounted) return;
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => const Login()));
+      return;
+    }
+    if (!mounted) return;
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (BuildContext context) => const Home()));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkCredentials();
   }
 
   @override
@@ -16,31 +36,10 @@ class Landing extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 4,
-            child: Container(
-              color: Theme.of(context).primaryColor,
-              child: null,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextInputField(
-                      controller: _urlController,
-                      label: "URL",
-                      type: "text", prefix: "https://", helpText: "Example https://play.dhis2.org"),
-                  const Padding(padding: EdgeInsets.only(top: 16)),
-                  ElevatedButton(
-                      onPressed: onPressed, child: const Text("Continue"))
-                ],
-              ),
-            ),
-          )
+        children: const [
+          Center(child: CircularProgressIndicator()),
+          Padding(padding: EdgeInsets.only(top: 16)),
+          Text("Please wait...")
         ],
       ),
     );
