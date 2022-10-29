@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maternal_health_data/modules/landing/landing.dart';
 import 'package:maternal_health_data/modules/login/login.dart';
 
 void main() {
@@ -11,11 +12,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Maternal Health Data',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
+      home: Landing(),
     );
   }
 }
