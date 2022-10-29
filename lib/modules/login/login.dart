@@ -99,6 +99,6 @@ class _LoginState extends State<Login> {
     Toast.show("Login successful",
         duration: Toast.lengthLong, gravity: Toast.bottom);
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => Landing()));
+        MaterialPageRoute(builder: (BuildContext context) => const Landing()));
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maternal_health_data/modules/landing/landing.dart';
 import 'package:maternal_health_data/shared/models/credentials.dart';
+import 'package:maternal_health_data/shared/state/user.dart';
+import "package:provider/provider.dart";
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -25,13 +27,19 @@ class Home extends StatelessWidget {
               icon: const Icon(Icons.logout))
         ],
       ),
-      body: Column(
-        children: const [
-          Text(
-            "Hi, Allen",
-            style: TextStyle(fontSize: 36),
-          )
-        ],
+      body: Consumer<UserProvider>(
+        builder: (context, userState, child) => Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16),
+              child: Text(
+                "Hi, ${userState.user?.name ?? ""}",
+                style: const TextStyle(fontSize: 36),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

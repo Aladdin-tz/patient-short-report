@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:maternal_health_data/modules/home/home.dart';
 import 'package:maternal_health_data/modules/login/login.dart';
 import 'package:maternal_health_data/shared/models/credentials.dart';
+import 'package:maternal_health_data/shared/state/user.dart';
+import 'package:provider/provider.dart';
 
 class Landing extends StatefulWidget {
   const Landing({Key? key}) : super(key: key);
@@ -19,6 +21,8 @@ class _LandingState extends State<Landing> {
           MaterialPageRoute(builder: (BuildContext context) => const Login()));
       return;
     }
+    if (!mounted) return;
+    await Provider.of<UserProvider>(context, listen: false).init();
     if (!mounted) return;
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) => const Home()));

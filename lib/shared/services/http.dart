@@ -29,12 +29,14 @@ class HttpService {
     return this;
   }
 
-  Future<Response> get(String path, {Map<String, dynamic>? params}) async {
-    String url = 'https://${credentials.url}/api/$path';
-    Uri? uri = Uri.tryParse(url);
-    if (uri != null) {
+  Future<Response> get(String path, {Map<String, String>? params}) async {
+    Uri? originalUri = Uri.tryParse('https://${credentials.url}');
+    if (originalUri != null) {
+      String url = 'api/$path';
+      Uri uri = Uri.https(originalUri.host, '${originalUri.path}/$url', params);
       return await dio.getUri(uri, options: options);
     } else {
+      String url = 'https://${credentials.url}/api/$path';
       return await dio.get(url, options: options);
     }
   }

@@ -23,19 +23,20 @@ class Credentials {
   }
 
   static Future<Credentials?> fromStorage() async {
-    CredentialsService service = CredentialsService();
-    Map<String, String>? credentialsMap = await service.getCredentials();
-    if (credentialsMap == null || credentialsMap.isEmpty) return null;
+    StorageService service = StorageService();
+    Map<String, String>? credentialsMap =
+        await service.getObject(['username', 'password', 'url']);
+    if (credentialsMap.isEmpty) return null;
     return Credentials.fromMap(credentialsMap);
   }
 
   Future save() async {
-    return CredentialsService()
-        .setCredentials(url: url, username: username, password: password);
+    return StorageService()
+        .setObject({"url": url, "username": username, "password": password});
   }
 
   Future clear() async {
-    return CredentialsService().clearCredentials();
+    return StorageService().clearStorage();
   }
 
   Future<bool> validate() async {
