@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maternal_health_data/modules/landing/landing.dart';
+import 'package:maternal_health_data/shared/state/search.dart';
 import 'package:maternal_health_data/shared/state/user.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
     ToastContext().init(context);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider())
+        ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),
+        ChangeNotifierProvider<SearchProvider>(create: (_) => SearchProvider()),
       ],
       child: MaterialApp(
         title: 'Maternal Health Data',
