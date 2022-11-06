@@ -40,8 +40,16 @@ class Credentials {
   }
 
   Future<bool> validate() async {
-    HttpService http = HttpService().initWithCredentials(this);
-    Response response = await http.get('me');
-    return response.statusCode == 200;
+    try {
+      HttpService http = HttpService().initWithCredentials(this);
+      Response response = await http.get('me');
+      return response.statusCode == 200;
+    } on DioError catch (_) {
+      if (_.response?.statusCode == 401) {
+        return false;
+      } else {
+        return false;
+      }
+    }
   }
 }

@@ -49,7 +49,6 @@ class Details extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
         child: Consumer<SearchProvider>(
           builder: (context, searchState, child) {
-            print(searchState.data);
 
             List<Widget> details = searchState.data
                 .map((e) => DetailsRow(

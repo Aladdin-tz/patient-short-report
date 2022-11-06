@@ -27,16 +27,13 @@ class SearchProvider extends ChangeNotifier {
           ]);
 
           this.results = results.where((element) => element != null).toList();
-          print(this.results);
           List<DataDisplay> rawData = [];
           for (SearchResults? result in this.results) {
             if (result == null) {
               continue;
             }
-            print(result?.details);
             rawData.addAll(result?.details ?? []);
           }
-          print(rawData);
           data = rawData;
           loading = false;
           notifyListeners();
