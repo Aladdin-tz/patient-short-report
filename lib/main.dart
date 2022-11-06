@@ -3,7 +3,6 @@ import 'package:maternal_health_data/modules/landing/landing.dart';
 import 'package:maternal_health_data/shared/state/search.dart';
 import 'package:maternal_health_data/shared/state/user.dart';
 import 'package:provider/provider.dart';
-import 'package:toast/toast.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ToastContext().init(context);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UserProvider>(create: (_) => UserProvider()),

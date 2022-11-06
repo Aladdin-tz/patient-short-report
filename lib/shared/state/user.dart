@@ -12,7 +12,7 @@ class UserProvider extends ChangeNotifier {
       localUser = await User.getUserFromOnline();
       await localUser?.save();
     }
-
     user = localUser;
+    notifyListeners();
   }
 }

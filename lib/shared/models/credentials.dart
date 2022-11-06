@@ -41,11 +41,7 @@ class Credentials {
 
   Future<bool> validate() async {
     HttpService http = HttpService().initWithCredentials(this);
-    try {
-      Response response = await http.get('me');
-      return response.statusCode == 200;
-    } catch (e) {
-      return false;
-    }
+    Response response = await http.get('me');
+    return response.statusCode == 200;
   }
 }

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:maternal_health_data/modules/landing/landing.dart';
 import 'package:maternal_health_data/shared/fields/text_input.dart';
 import 'package:maternal_health_data/shared/models/credentials.dart';
-import 'package:toast/toast.dart';
+import 'package:maternal_health_data/shared/utils/toast.dart';
+import 'package:provider/provider.dart';
+
+import '../../shared/state/user.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -32,19 +35,21 @@ class _LoginState extends State<Login> {
     });
     try {
       bool isValid = await credentials.validate();
-
       if (isValid) {
         await credentials.save();
         if (!mounted) return;
+        await Provider.of<UserProvider>(context, listen: false).init();
+        if (!mounted) return;
         navigateToLanding(context);
       } else {
-        Toast.show("Invalid url/username/password",
-            duration: Toast.lengthLong, gravity: Toast.bottom);
+        Utilities.showToast("Invalid url/username/password");
       }
     } catch (e) {
-      Toast.show("Error: ${e.toString()}",
-          duration: Toast.lengthLong, gravity: Toast.bottom);
+      Utilities.showToast("Error: ${e.toString()}");
     }
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -96,8 +101,8 @@ class _LoginState extends State<Login> {
   }
 
   void navigateToLanding(BuildContext context) {
-    Toast.show("Login successful",
-        duration: Toast.lengthLong, gravity: Toast.bottom);
+    Utilities.showToast("Login successful");
+
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (BuildContext context) => const Landing()));
   }

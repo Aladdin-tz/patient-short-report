@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:maternal_health_data/shared/models/search_results.dart';
 import 'package:provider/provider.dart';
 
 import '../../shared/state/search.dart';
 
 class DetailsRow extends StatelessWidget {
-  final String title;
-  final String value;
+  final DataDisplay data;
 
-  const DetailsRow({Key? key, required this.title, required this.value})
-      : super(key: key);
+  const DetailsRow({Key? key, required this.data}) : super(key: key);
 
   final TextStyle headerStyle = const TextStyle(fontSize: 24);
   final TextStyle valueStyle = const TextStyle(fontSize: 24);
@@ -20,7 +19,7 @@ class DetailsRow extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            title,
+            data.title,
             style: headerStyle,
           ),
           Text(
@@ -28,7 +27,7 @@ class DetailsRow extends StatelessWidget {
             style: headerStyle,
           ),
           Text(
-            value,
+            data.value,
             style: valueStyle,
           )
         ],
@@ -50,15 +49,19 @@ class Details extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
         child: Consumer<SearchProvider>(
           builder: (context, searchState, child) {
-            print(searchState.results.details);
-            List<Widget> details = searchState.results.details
+            print(searchState.data);
+
+            List<Widget> details = searchState.data
                 .map((e) => DetailsRow(
-                    title: e['title'] ?? '', value: e['value'] ?? ''))
+                      data: e,
+                    ))
                 .toList();
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: details,
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: details,
+              ),
             );
           },
         ),
