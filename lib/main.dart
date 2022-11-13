@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SearchProvider>(create: (_) => SearchProvider()),
       ],
       child: MaterialApp(
-        title: 'Maternal Health Data',
+        title: 'Patient Short Report',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

@@ -63,9 +63,9 @@ class _LoginState extends State<Login> {
             height: MediaQuery.of(context).size.height / 4,
             child: Container(
               color: Theme.of(context).primaryColor,
-              child: Center(
+              child: const Center(
                   child: Text(
-                "Maternal Health Data",
+                "Patient Short Report",
                 style: TextStyle(color: Colors.white, fontSize: 32),
               )),
             ),
