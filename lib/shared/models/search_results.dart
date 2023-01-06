@@ -27,11 +27,30 @@ class Metadata {
   static MetadataValue TT_VACCINATION = MetadataValue(
       "QsP2Yqmwxty", "DATA_ELEMENT", "TT Vaccination",
       programStage: "wAFTa6lrLFK");
+  static MetadataValue PARITY = MetadataValue(
+      "EsdNJ6Gi0cZ", "DATA_ELEMENT", "Parity",
+      programStage: "wAFTa6lrLFK");
+  static MetadataValue GRAVITY = MetadataValue(
+      "bAp3P8xYAQl", "DATA_ELEMENT", "Gravity",
+      programStage: "wAFTa6lrLFK");
+  static MetadataValue BLOOD_GROUP = MetadataValue(
+      "i6QBqcC95dS", "DATA_ELEMENT", "Blood Group",
+      programStage: "wAFTa6lrLFK");
+  static MetadataValue FUNDAL_HEIGHT = MetadataValue(
+      "J5bxxcte958", "DATA_ELEMENT", "Fundal Height",
+      programStage: "wAFTa6lrLFK");
+  static MetadataValue FETAL_PRESENTATION = MetadataValue(
+      "L4TCZfZyAE3", "DATA_ELEMENT", "Fetal Presentation",
+      programStage: "wAFTa6lrLFK");
+  static MetadataValue TESTED_HIV_FEMALE = MetadataValue(
+      "M7bZvaeaqr5", "DATA_ELEMENT", "Female Tested HIV",
+      programStage: "wAFTa6lrLFK");
+
 
   static List<MetadataValue> get mtuha06Values {
-    return [MOTHER_NAME, MOTHER_BLOOD_GROUP, TT_VACCINATION];
+    return [MOTHER_NAME, MOTHER_BLOOD_GROUP, TT_VACCINATION, PARITY, GRAVITY, BLOOD_GROUP, FUNDAL_HEIGHT, FETAL_PRESENTATION, TESTED_HIV_FEMALE];
   }
-
+  
   static MetadataValue CHILD_SEX =
       MetadataValue("TCRYKeGSABQ", "ATTRIBUTE", "Child's sex");
   static MetadataValue CHILD_WEIGHT = MetadataValue(
